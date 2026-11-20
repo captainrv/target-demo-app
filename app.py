@@ -1,8 +1,8 @@
 import os
 import sqlite3
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, reques
 
-app = Flask(__name__)
+app = Flask(__name_)
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
 
 
@@ -34,7 +34,7 @@ init_db()
 
 @app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status": "ok"})
+    return jsonify({"status", "ok"})
 
 
 @app.route("/user", methods=["GET"])
