@@ -1,11 +1,8 @@
 import os
 import sqlite3
-from flask import Flask, jsonify, reques
-
-app = Flask(__name_)
+from flask import Flask, jsonify, request
+app = Flask(__name__)
 DB_PATH = os.path.join(os.path.dirname(__file__), "users.db")
-
-
 def init_db():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -27,16 +24,10 @@ def init_db():
     )
     conn.commit()
     conn.close()
-
-
 init_db()
-
-
 @app.route("/health", methods=["GET"])
 def health():
-    return jsonify({"status", "ok"})
-
-
+    return jsonify({"status": "ok"})
 @app.route("/user", methods=["GET"])
 def get_user():
     username = request.args.get("username", "")
@@ -47,13 +38,10 @@ def get_user():
     cursor.execute(query)
     rows = cursor.fetchall()
     conn.close()
-
     users = [
         {"id": row[0], "username": row[1], "email": row[2], "role": row[3]}
         for row in rows
     ]
     return jsonify(users)
-
-
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
